@@ -1,0 +1,38 @@
+<script src="{{ url_for('static', filename='includes/jquery/js/jquery-3.4.1.js') }}"></script>
+<script src="{{ url_for('static', filename='includes/jquery/js/jquery.datatables.min.js') }}"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='includes/datatables/css/dataTables.bootstrap.css') }}">
+<script src="{{ url_for('static', filename='includes/datatables/js/dataTables.bootstrap.js') }}"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap-3.3.7/css/bootstrap.min.css') }}">
+<script src="{{ url_for('static', filename='includes/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatable.css') }}">
+
+<html>
+    <head>
+        
+    </head>
+    <body>
+       {{message}}
+       <button id="yes">Yes</button><button id="no">No</button>
+    </body>
+</html>
+
+<script>
+    $("#yes").click(function () {
+        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: true }), contentType:"application/json" });
+    });
+
+    $("#no").click(function () {
+        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: false }), contentType:"application/json" });
+    });
+
+    $(document).ready(function () {
+        $('#orderTable').DataTable({
+            "paging" : false
+        });
+        $('.dataTables_length').addClass('bs-select');
+        $('.dataTables_filter input[type="search"]').css({'width':'200px'});
+    });
+</script>
