@@ -21,7 +21,7 @@ def mainPage():
 @pluginPages.route("/choice/<token>/",methods=["GET"])
 def askAnswer(token):
     foundChoice = choice._choice().getAsClass(sessionData=api.g["sessionData"],query={ "token" : token })[0]
-    return render_template("answer.html", message=foundChoice.message, token=token)
+    return render_template("answer.html", message=foundChoice.message, token=token, CSRF=api.g["sessionData"]["CSRF"])
 
 @pluginPages.route("/choice/<token>/",methods=["POST"])
 def setAnswer(token):
