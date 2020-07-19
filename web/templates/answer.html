@@ -20,12 +20,16 @@
 </html>
 
 <script>
+	var CSRF = "{{CSRF}}"
+</script>
+
+<script>
     $("#yes").click(function () {
-        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: true }), contentType:"application/json" });
+        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: true, CSRF: CSRF }), contentType:"application/json" });
     });
 
     $("#no").click(function () {
-        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: false }), contentType:"application/json" });
+        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: false, CSRF: CSRF }), contentType:"application/json" });
     });
 
     $(document).ready(function () {

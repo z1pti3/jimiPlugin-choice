@@ -12,7 +12,8 @@ pluginPages = Blueprint('choicePages', __name__, template_folder="templates")
 
 @pluginPages.route("/choice/",methods=["GET"])
 def mainPage():
-    foundChoices = choice._choice().query()["results"]
+    # Only show last 5 days still active
+    foundChoices = choice._choice().query(query={ "creationTime" : { "$gt" : time.time()-432000 } , "complete" : False })["results"]
     result = []
     for foundChoice in foundChoices:
         result.append(foundChoice)
@@ -21,7 +22,7 @@ def mainPage():
 @pluginPages.route("/choice/<token>/",methods=["GET"])
 def askAnswer(token):
     foundChoice = choice._choice().getAsClass(sessionData=api.g["sessionData"],query={ "token" : token })[0]
-    return render_template("answer.html", message=foundChoice.message, token=token)
+    return render_template("answer.html", message=foundChoice.message, token=token, CSRF=api.g["sessionData"]["CSRF"])
 
 @pluginPages.route("/choice/<token>/",methods=["POST"])
 def setAnswer(token):
@@ -37,5 +38,3 @@ def setAnswer(token):
             foundChoice.answerTime = int(time.time())
             foundChoice.update(["answer","answerTime"])
     return {},200
-
-
