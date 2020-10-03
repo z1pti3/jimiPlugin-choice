@@ -10,7 +10,7 @@ class _choice(plugin._plugin):
     def install(self):
         # Register models
         model.registerModel("choice","_choice","_document","plugins.choice.models.choice",True)
-        model.registerModel("requestChoice","_requestChoice","_action","plugins.choice.models.action")
+        model.registerModel("choiceRequest","_requestChoice","_action","plugins.choice.models.action")
         model.registerModel("choiceTrigger","_choiceTrigger","_action","plugins.choice.models.action",True)
 
         c = conduct._conduct().new("choiceCore")
