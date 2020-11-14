@@ -1,21 +1,31 @@
 <script src="{{ url_for('static', filename='includes/jquery/js/jquery-3.4.1.js') }}"></script>
-<script src="{{ url_for('static', filename='includes/jquery/js/jquery.datatables.min.js') }}"></script>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='includes/datatables/css/dataTables.bootstrap.css') }}">
-<script src="{{ url_for('static', filename='includes/datatables/js/dataTables.bootstrap.js') }}"></script>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap-3.3.7/css/bootstrap.min.css') }}">
 <script src="{{ url_for('static', filename='includes/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/datatable.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='themes/default/default.css') }}">
 
 <html>
     <head>
-        
+
     </head>
     <body>
-       {{message}}
-       <button id="yes">Yes</button><button id="no">No</button>
+		<div class="theme-panelContainer" style="width: 550px; margin: 50px auto;">
+			<div>
+                <h2 class="text-center">jimi Choice:</h2>
+				<h3 class="text-center">{{message}}</h3>
+				<div class="form-group text-center answerSet">
+                    <button id="yes" class="btn btn-primary theme-panelButton">Yes</button>
+                    <button id="no" class="btn btn-primary theme-panelButton">No</button>
+                </div>
+                <div class="form-group text-center answerDone" style="display: none">
+                    <p class="text-center">
+                        Thank you
+                    </p>
+				</div>
+			</div>
+		</div>
     </body>
 </html>
 
@@ -25,18 +35,18 @@
 
 <script>
     $("#yes").click(function () {
-        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: true, CSRF: CSRF }), contentType:"application/json" });
+        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: true, CSRF: CSRF }), contentType:"application/json", "success" : function() {
+                $('.answerSet').hide();
+                $('.answerDone').show();
+            } 
+        });
     });
 
     $("#no").click(function () {
-        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: false, CSRF: CSRF }), contentType:"application/json" });
-    });
-
-    $(document).ready(function () {
-        $('#orderTable').DataTable({
-            "paging" : false
+        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: false, CSRF: CSRF }), contentType:"application/json", "success" : function() {
+                $('.answerSet').hide();
+                $('.answerDone').show();
+            } 
         });
-        $('.dataTables_length').addClass('bs-select');
-        $('.dataTables_filter input[type="search"]').css({'width':'200px'});
     });
 </script>

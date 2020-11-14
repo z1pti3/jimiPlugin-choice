@@ -10,6 +10,11 @@ class _requestChoice(action._action):
 			actionResult["result"] = True
 			actionResult["rc"] = 100
 			return actionResult
+		elif "000000000001010000000000" in self._id:
+			actionResult["result"] = True
+			actionResult["msg"] = "Codify not supported for choice actions"
+			actionResult["rc"] = 100
+			return actionResult
 		message = helpers.evalString(self.message,{"data" : data})
 		token = choice._choice().new(message,data["conductID"],data["triggerID"],data["flowID"],data,self.acl)
 		actionResult["data"]["token"] = token

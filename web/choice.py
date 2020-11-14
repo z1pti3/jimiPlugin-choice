@@ -21,12 +21,16 @@ def mainPage():
 
 @pluginPages.route("/choice/<token>/",methods=["GET"])
 def askAnswer(token):
-    foundChoice = choice._choice().getAsClass(sessionData=api.g["sessionData"],query={ "token" : token })[0]
-    return render_template("answer.html", message=foundChoice.message, token=token, CSRF=api.g["sessionData"]["CSRF"])
+    foundChoice = choice._choice().getAsClass(sessionData=api.g.sessionData,query={ "token" : token, "answerTime" : 0 })
+    if len(foundChoice) == 1:
+        foundChoice = foundChoice[0]
+        return render_template("answer.html", message=foundChoice.message, token=token, CSRF=api.g.sessionData["CSRF"])
+    else:
+        return render_template("complete.html")
 
 @pluginPages.route("/choice/<token>/",methods=["POST"])
 def setAnswer(token):
-    foundChoice = choice._choice().getAsClass(sessionData=api.g["sessionData"],query={ "token" : token })[0]
+    foundChoice = choice._choice().getAsClass(sessionData=api.g.sessionData,query={ "token" : token })[0]
     data = json.loads(api.request.data)
     if foundChoice.answerTime == 0:
         if data["answer"]:
