@@ -1,0 +1,119 @@
+{
+    "name" : "choice",
+    "author" : "z1p",
+    "version" : 1.0,
+    "categories" : ["automation"],
+    "description" : "Choice plugins enables functionality to pause a given flow and await user response to a given question i.e. Do you wish to continue?. When a response is provided the flow can continue or stop.",
+    "icon" : null,
+    "requirements" : {
+        "jimi_min_version" : null,
+        "jimi_max_version" : null,
+        "plugins" : []
+    },
+    "collections" : {
+        "choice" : {
+            "display_name" : "choice",
+            "className" : "_choice",
+            "class_location" : "models.choice",
+            "description" : "Collection that holds choices and flow states.",
+            "fields" : [
+                { "schema_item" : "data", "schema_value" : "data", "type" : "json-input", "label" : "data", "description" : "Restore state of the data json object at the time of raising a choice." },
+                { "schema_item" : "token", "schema_value" : "token", "type" : "input", "label" : "token", "description" : "Generated UID token for a given choice." },
+                { "schema_item" : "message", "schema_value" : "message", "type" : "input", "label" : "message", "description" : "The question or message to display to the user when they access the URL with the token." },
+                { "schema_item" : "conductID", "schema_value" : "conductID", "type" : "input", "label" : "conductID", "description" : "Which conduct created this choice." },
+                { "schema_item" : "triggerID", "schema_value" : "triggerID", "type" : "input", "label" : "triggerID", "description" : "Which trigger created this choice." },
+                { "schema_item" : "flowID", "schema_value" : "flowID", "type" : "input", "label" : "flowID", "description" : "Which flow created this choice." },
+                { "schema_item" : "answer", "schema_value" : "answer", "type" : "checkbox", "label" : "answer", "description" : "True or False answer to the question." },
+                { "schema_item" : "answerTime", "schema_value" : "answerTime", "type" : "input", "label" : "answerTime", "description" : "The time the answer was provided." },
+                { "schema_item" : "complete", "schema_value" : "complete", "type" : "checkbox", "label" : "complete", "description" : "Will remain False until and answer has been provided and the flow has not been resumed. Once the flow has been resumed this is set to True." }
+            ],
+            "data_out" : {
+
+            }
+        }
+    },
+    "triggers" : {
+        
+    },
+    "actions" : {
+        "requestChoice" : {
+            "display_name" : "requestChoice",
+            "className" : "_requestChoice",
+            "class_location" : "models.action",
+            "description" : "Pauses a flow and generates a token and URL for providing an answer to a yes/no question.",
+            "fields" : [
+                { "schema_item" : "message", "schema_value" : "message", "type" : "input", "label" : "message", "description" : "The yes/no question to provide when the url is accessed with the token generated.", "required" : true, "jimi_syntax" : true }
+            ],
+            "data_out" : {
+                "result" : { 
+                    "description" : "Returns True when a flow is continued otherwise False is returned along with a url and token.",
+                    "type" : "boolean",
+                    "always_present" : true,
+                    "values" : {
+                        "True" : { "description" : "Continue flow." },
+                        "False" : { "description" : "Pause flow." }
+                    }
+                },
+                "rc" : {
+                    "description" : "Returns the exit code for the action.",
+                    "type" : "number",
+                    "always_present" : true,
+                    "values" : {
+                        "100" : { "description" : "Continue flow." },
+                        "300" : { "description" : "Pause flow." }
+                    }
+                },
+                "data.token" : {
+                    "description" : "When a flow is paused a token is generated and returned.",
+                    "type" : "string",
+                    "always_present" : false,
+                    "values" : {
+                    }
+                },
+                "data.url" : {
+                    "description" : "When a flow is paused a url including the token is returned.",
+                    "type" : "string",
+                    "always_present" : false,
+                    "values" : {
+                    }
+                },
+                "msg" : {
+                    "description" : "A message that outlines additional information about the result.",
+                    "type" : "string",
+                    "always_present" : false,
+                    "values" : {
+                    }
+                }
+            }
+        },
+        "choiceTrigger" : {
+            "display_name" : "choiceTrigger",
+            "className" : "_choiceTrigger",
+            "class_location" : "models.action",
+            "description" : "Core choice system action that processes answered questions and resumes paused flows.",
+            "fields" : [
+            ],
+            "data_out" : {
+                "result" : { 
+                    "description" : "Returns True after all choices have been processed.",
+                    "type" : "boolean",
+                    "always_present" : true,
+                    "values" : {
+                        "True" : { "description" : "" }
+                    }
+                },
+                "rc" : {
+                    "description" : "Returns the exit code 0 after all choices have been processed.",
+                    "type" : "number",
+                    "always_present" : true,
+                    "values" : {
+                        "0" : { "description" : "" }
+                    }
+                }
+            }
+        }
+    },
+    "settings" : {
+
+    }
+}
