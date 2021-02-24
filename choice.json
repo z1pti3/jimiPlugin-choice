@@ -65,21 +65,21 @@
                 },
                 "data.token" : {
                     "description" : "When a flow is paused a token is generated and returned.",
-                    "type" : "string",
+                    "type" : "text",
                     "always_present" : false,
                     "values" : {
                     }
                 },
                 "data.url" : {
                     "description" : "When a flow is paused a url including the token is returned.",
-                    "type" : "string",
+                    "type" : "text",
                     "always_present" : false,
                     "values" : {
                     }
                 },
                 "msg" : {
                     "description" : "A message that outlines additional information about the result.",
-                    "type" : "string",
+                    "type" : "text",
                     "always_present" : false,
                     "values" : {
                     }
