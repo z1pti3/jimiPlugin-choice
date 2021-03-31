@@ -10,7 +10,7 @@ from plugins.choice.models import choice
 
 pluginPages = Blueprint('choicePages', __name__, template_folder="templates")
 
-@pluginPages.route("/choice/",methods=["GET"])
+@pluginPages.route("/",methods=["GET"])
 def mainPage():
     # Only show last 5 days still active
     foundChoices = choice._choice().query(query={ "creationTime" : { "$gt" : time.time()-432000 } , "complete" : False })["results"]
@@ -19,7 +19,7 @@ def mainPage():
         result.append(foundChoice)
     return render_template("choice.html", result=result)
 
-@pluginPages.route("/choice/<token>/",methods=["GET"])
+@pluginPages.route("/<token>/",methods=["GET"])
 def askAnswer(token):
     foundChoice = choice._choice().getAsClass(sessionData=api.g.sessionData,query={ "token" : token, "answerTime" : 0 })
     if len(foundChoice) == 1:
@@ -28,7 +28,7 @@ def askAnswer(token):
     else:
         return render_template("complete.html")
 
-@pluginPages.route("/choice/<token>/",methods=["POST"])
+@pluginPages.route("/<token>/",methods=["POST"])
 def setAnswer(token):
     foundChoice = choice._choice().getAsClass(sessionData=api.g.sessionData,query={ "token" : token })[0]
     data = json.loads(api.request.data)
