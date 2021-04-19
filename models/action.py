@@ -2,6 +2,8 @@ from plugins.choice.models import choice
 from core.models import action, conduct
 from core import helpers, workers
 
+import jimi
+
 class _requestChoice(action._action):
 	message = str()
 
@@ -32,9 +34,10 @@ class _choiceTrigger(action._action):
 			c = conduct._conduct().getAsClass(id=answeredItem.conductID)
 			if c and len(c) > 0:
 				c = c[0]
-				data = answeredItem.data
-				data["plugin"]["choice"] = True
-				data["callingTriggerID"] = answeredItem.triggerID
+				data = jimi.conduct.dataTemplate(data,keepEvent=True)
+				data["flowData"]["plugin"]["choice"] = True
+				data["flowData"]["callingTriggerID"] = answeredItem.triggerID
+				data["flowData"]["eventStats"] = { "first" : True, "current" : 1, "total" : 1, "last" : True }
 				if answeredItem.answer:
 					workers.workers.new("trigger:{0}".format(answeredItem._id),c.triggerHandler,(answeredItem.flowID,data,False,True))
 			answeredItem.update(["complete"])
