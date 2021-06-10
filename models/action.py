@@ -34,7 +34,8 @@ class _choiceTrigger(action._action):
 			c = conduct._conduct().getAsClass(id=answeredItem.conductID)
 			if c and len(c) > 0:
 				c = c[0]
-				data = jimi.conduct.dataTemplate(answeredItem.data,keepEvent=True)
+				data = jimi.conduct.dataTemplate(data,keepEvent=True)
+				data["flowData"] = answeredItem.data
 				data["flowData"]["plugin"]["choice"] = True
 				data["flowData"]["callingTriggerID"] = answeredItem.triggerID
 				data["flowData"]["eventStats"] = { "first" : True, "current" : 1, "total" : 1, "last" : True }
