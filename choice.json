@@ -1,7 +1,7 @@
 {
     "name" : "choice",
     "author" : "z1p",
-    "version" : 1.0,
+    "version" : 1.1,
     "categories" : ["automation"],
     "description" : "Choice plugins enables functionality to pause a given flow and await user response to a given question i.e. Do you wish to continue?. When a response is provided the flow can continue or stop.",
     "icon" : null,
