@@ -5,7 +5,7 @@ from core.models import conduct, trigger, webui
 from plugins.choice.models import action
 
 class _choice(plugin._plugin):
-    version = 1.0
+    version = 1.1
 
     def install(self):
         # Register models
