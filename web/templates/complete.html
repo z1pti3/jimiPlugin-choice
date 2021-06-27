@@ -1,21 +1,15 @@
-<script src="{{ url_for('static', filename='/includes/jquery-3.6.0/js/jquery-3.6.0.min.js') }}"></script>
+{% extends "main.html" %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap-3.3.7/css/bootstrap.min.css') }}">
-<script src="{{ url_for('static', filename='includes/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
+{% block head %}
+    {{ jimi.jquery() }}
+    {{ jimi.tables() }}
+{% endblock %}
 
-
-<link rel="stylesheet" href="{{ url_for('static', filename='themes/default/default.css') }}">
-
-<html>
-    <head>
-
-    </head>
-    <body>
-		<div class="theme-panelContainer" style="width: 550px; margin: 50px auto;">
-			<div>
-                <h2 class="text-center">jimi Choice:</h2>
-				<h3 class="text-center">This choice has already been answered!</h3>
-			</div>
-		</div>
-    </body>
-</html>
+{% block main %}
+  <div class="theme-panelContainer" style="width: 550px; margin: 50px auto;">
+    <div>
+              <h2 class="text-center">jimi Choice:</h2>
+      <h3 class="text-center">This choice has already been answered!</h3>
+    </div>
+  </div>
+{% endblock %}

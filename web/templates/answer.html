@@ -1,52 +1,46 @@
-<script src="{{ url_for('static', filename='/includes/jquery-3.6.0/js/jquery-3.6.0.min.js') }}"></script>
+{% extends "main.html" %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap-3.3.7/css/bootstrap.min.css') }}">
-<script src="{{ url_for('static', filename='includes/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
+{% block head %}
+    {{ jimi.jquery() }}
+    {{ jimi.tables() }}
+{% endblock %}
 
+{% block main %}
+    <div class="theme-panelContainer" style="width: 550px; margin: 50px auto;">
+        <div>
+            <h2 class="text-center">jimi Choice:</h2>
+            <h3 class="text-center">{{message}}</h3>
+            <div class="form-group text-center answerSet">
+                <button id="yes" class="btn btn-primary theme-panelButton">Yes</button>
+                <button id="no" class="btn btn-primary theme-panelButton">No</button>
+            </div>
+            <div class="form-group text-center answerDone" style="display: none">
+                <p class="text-center">
+                    Thank you
+                </p>
+            </div>
+        </div>
+    </div>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='themes/default/default.css') }}">
+    <script>
+        var CSRF = "{{CSRF}}"
+    </script>
 
-<html>
-    <head>
-
-    </head>
-    <body>
-		<div class="theme-panelContainer" style="width: 550px; margin: 50px auto;">
-			<div>
-                <h2 class="text-center">jimi Choice:</h2>
-				<h3 class="text-center">{{message}}</h3>
-				<div class="form-group text-center answerSet">
-                    <button id="yes" class="btn btn-primary theme-panelButton">Yes</button>
-                    <button id="no" class="btn btn-primary theme-panelButton">No</button>
-                </div>
-                <div class="form-group text-center answerDone" style="display: none">
-                    <p class="text-center">
-                        Thank you
-                    </p>
-				</div>
-			</div>
-		</div>
-    </body>
-</html>
-
-<script>
-    var CSRF = "{{CSRF}}"
-</script>
-
-<script>
-    $("#yes").click(function () {
-        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: true, CSRF: CSRF }), contentType:"application/json", "success" : function() {
-                $('.answerSet').hide();
-                $('.answerDone').show();
-            } 
+    <script>
+        $("#yes").click(function () {
+            $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: true, CSRF: CSRF }), contentType:"application/json", "success" : function() {
+                    $('.answerSet').hide();
+                    $('.answerDone').show();
+                } 
+            });
         });
-    });
 
-    $("#no").click(function () {
-        $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: false, CSRF: CSRF }), contentType:"application/json", "success" : function() {
-                $('.answerSet').hide();
-                $('.answerDone').show();
-            } 
+        $("#no").click(function () {
+            $.ajax({url: "/plugin/choice/{{token}}/", type:"POST", data:JSON.stringify({ answer: false, CSRF: CSRF }), contentType:"application/json", "success" : function() {
+                    $('.answerSet').hide();
+                    $('.answerDone').show();
+                } 
+            });
         });
-    });
-</script>
+    </script>
+{% endblock %}
