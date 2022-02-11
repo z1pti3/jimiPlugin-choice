@@ -18,7 +18,7 @@ class _requestChoice(action._action):
 			actionResult["rc"] = 100
 			return actionResult
 		message = helpers.evalString(self.message,{"data" : data})
-		token = choice._choice().new(message,data["conductID"],data["trigger_id"],data["flow_id"],data,self.acl)
+		token = choice._choice().new(message,data["conduct_id"],data["trigger_id"],data["flow_id"],data,self.acl)
 		actionResult["data"]["token"] = token
 		actionResult["data"]["uri"] = "plugin/choice/{0}/".format(token)
 		actionResult["result"] = False
